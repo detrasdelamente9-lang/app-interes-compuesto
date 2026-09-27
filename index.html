@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Interés Compuesto e Inversión</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2933945571854055" crossorigin="anonymous"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; padding: 30px 0; }
+        header h1 { font-size: 2.2rem; background: linear-gradient(90deg, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: #aaa; margin-top: 10px; }
+        
+        .ads-top, .ads-bottom { margin: 25px 0; text-align: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border: 1px dashed #555; min-height: 100px; display: flex; align-items: center; justify-content: center; color: #888; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin: 25px 0; }
+        .card { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 16px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .card h2 { font-size: 1.4rem; margin-bottom: 20px; color: #00d2ff; }
+        
+        label { display: block; margin: 12px 0 6px; font-size: 0.9rem; color: #ccc; }
+        input, select {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444;
+            background: rgba(255,255,255,0.08); color: #fff; font-size: 1rem;
+        }
+        button {
+            margin-top: 20px; width: 100%; padding: 14px; border: none; border-radius: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5); color: #fff; font-size: 1.05rem;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,210,255,0.4); }
+        
+        .result { margin-top: 20px; padding: 18px; background: rgba(0,210,255,0.1); border-left: 4px solid #00d2ff; border-radius: 8px; }
+        .result h3 { font-size: 1.3rem; color: #00ff88; margin-bottom: 10px; }
+        .result p { margin: 6px 0; }
+        .highlight { color: #00d2ff; font-weight: bold; }
+        
+        .amazon-section { background: rgba(255,153,0,0.08); border: 1px solid rgba(255,153,0,0.3); border-radius: 16px; padding: 25px; margin: 30px 0; text-align: center; }
+        .amazon-section h2 { color: #ff9900; margin-bottom: 15px; }
+        .amazon-section a { color: #4285f4; text-decoration: none; font-weight: bold; }
+        .amazon-section a:hover { text-decoration: underline; }
+        .product-img { max-width: 200px; border-radius: 12px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        
+        footer { text-align: center; padding: 25px 0; color: #666; font-size: 0.85rem; }
+        
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 Calculadora de Interés Compuesto e Inversión</h1>
+            <p>Herramienta profesional para calcular el crecimiento de tu dinero con interés compuesto</p>
+        </header>
+
+        <div class="ads-top">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2933945571854055" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>💰 Calculadora Interés Compuesto</h2>
+                <label>Capital Inicial ($)</label>
+                <input type="number" id="ci-principal" value="10000" min="0">
+                <label>Tasa Anual (%)</label>
+                <input type="number" id="ci-rate" value="5" min="0" step="0.1">
+                <label>Años</label>
+                <input type="number" id="ci-years" value="10" min="0">
+                <label>Frecuencia de Capitalización</label>
+                <select id="ci-frequency">
+                    <option value="1">Anual (1x/año)</option>
+                    <option value="2">Semestral (2x/año)</option>
+                    <option value="4">Trimestral (4x/año)</option>
+                    <option value="12" selected>Mensual (12x/año)</option>
+                    <option value="365">Diaria (365x/año)</option>
+                    <option value="52">Semanal (52x/año)</option>
+                </select>
+                <button onclick="calcCompound()">Calcular</button>
+                <div class="result" id="ci-result" style="display:none;">
+                    <h3>Resultado</h3>
+                    <p>Monto final: <span class="highlight" id="ci-final">$0</span></p>
+                    <p>Interés ganado: <span class="highlight" id="ci-interest">$0</span></p>
+                    <p>Total invertido: <span class="highlight" id="ci-invested">$0</span></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📊 Calculadora Inversión Mensual</h2>
+                <label>Aporte Mensual ($)</label>
+                <input type="number" id="inv-monthly" value="200" min="0">
+                <label>Tasa Anual (%)</label>
+                <input type="number" id="inv-rate" value="7" min="0" step="0.1">
+                <label>Años</label>
+                <input type="number" id="inv-years" value="20" min="0">
+                <label>Capital Inicial ($)</label>
+                <input type="number" id="inv-initial" value="0" min="0">
+                <button onclick="calcInvestment()">Calcular</button>
+                <div class="result" id="inv-result" style="display:none;">
+                    <h3>Resultado</h3>
+                    <p>Valor futuro: <span class="highlight" id="inv-future">$0</span></p>
+                    <p>Total aportado: <span class="highlight" id="inv-contributed">$0</span></p>
+                    <p>Ganancia por intereses: <span class="highlight" id="inv-gain">$0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="amazon-section">
+            <h2>📚 Libros recomendados sobre inversiones e interés compuesto</h2>
+            <img class="product-img" src="https://m.media-amazon.com/images/I/51TQq6FhJLL._SX331_BO1,204,203,200_.jpg" alt="El hombre más rico de Babilonia">
+            <p><strong>El hombre más rico de Babilonia</strong> – Clásico sobre acumulación de riqueza e interés compuesto.</p>
+            <a href="https://www.amazon.com/dp/1505225353?tag=detrasdelam-21" target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+
+        <div class="ads-bottom">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2933945571854055" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <footer>
+            <p>© 2024 Calculadora de Interés Compuesto. Herramienta educativa y gratuita.</p>
+        </footer>
+    </div>
+
+    <script>
+        function fmt(n) {
+            return '$' + Number(n).toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function calcCompound() {
+            const P = parseFloat(document.getElementById('ci-principal').value) || 0;
+            const r = (parseFloat(document.getElementById('ci-rate').value) || 0) / 100;
+            const t = parseFloat(document.getElementById('ci-years').value) || 0;
+            const n = parseInt(document.getElementById('ci-frequency').value) || 1;
+            const A = P * Math.pow(1 + r / n, n * t);
+            const interest = A - P;
+            document.getElementById('ci-final').textContent = fmt(A);
+            document.getElementById('ci-interest').textContent = fmt(interest);
+            document.getElementById('ci-invested').textContent = fmt(P);
+            document.getElementById('ci-result').style.display = 'block';
+        }
+
+        function calcInvestment() {
+            const PMT = parseFloat(document.getElementById('inv-monthly').value) || 0;
+            const r = (parseFloat(document.getElementById('inv-rate').value) || 0) / 100;
+            const t = parseFloat(document.getElementById('inv-years').value) || 0;
+            const P0 = parseFloat(document.getElementById('inv-initial').value) || 0;
+            const n = 12;
+            const months = t * n;
+            const monthlyRate = r / n;
+            let future = P0 * Math.pow(1 + monthlyRate, months);
+            if (monthlyRate !== 0) {
+                future += PMT * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            } else {
+                future += PMT * months;
+            }
+            const contributed = P0 + PMT * months;
+            const gain = future - contributed;
+            document.getElementById('inv-future').textContent = fmt(future);
+            document.getElementById('inv-contributed').textContent = fmt(contributed);
+            document.getElementById('inv-gain').textContent = fmt(gain);
+            document.getElementById('inv-result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
